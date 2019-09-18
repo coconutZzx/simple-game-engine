@@ -16,6 +16,9 @@ public class Pickup{
 
             Call the SetPosition method.
         */
+        this.maxX = maxX;
+        this.maxY = maxY;
+        SetPosition();
     }
 
     public int X {
