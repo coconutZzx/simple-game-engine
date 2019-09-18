@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using static System.Console;
 
-public class Snake{
+public class Snake
+{
     private double x; //the x position of the snake
     private double y; //the y position of the snake
 
@@ -17,18 +18,21 @@ public class Snake{
         The name between <> specifies the type List stores. */
     private List<SnakeSegment> segments = new List<SnakeSegment>();
 
-    public Snake(int x, int y, double speed){
+    public Snake(int x, int y, double speed)
+    {
         /*  ------------------------------------------
             2.1
             ------------------------------------------   
             Initialize the x, y and speed fields 
             using the values passed to the constructor
         */
+        this.x = x;
+        this.y = y;
+        this.speed = speed;
 
-        
         /*  Adds a segment to the segments List
             This segment will serve as the head of the snake. */
-        segments.Add(new SnakeSegment(x,y,'O'));
+        segments.Add(new SnakeSegment(x, y, 'O'));
     }
 
     /*  You will notice that we round the double x and y fields
@@ -41,28 +45,50 @@ public class Snake{
         
         Returning our positions in this way means we keep the precision
         of our positions, but only expose whole numbers the can place our
-        snake correctly on our canvas */
-    public int X {
+        snake correctly on our canvas 
+    */
+
+    public int X
+    {
         /*  Math.Floor will round our value 
             down to the nearest whole number. 
             We still have to cast it to an int */
-        get {return (int) Math.Floor(x);}
+        get
+        {
+            return (int)Math.Floor(x);
+        }
     }
 
-    public int Y {
-        get {return (int) Math.Floor(y);}
+    public int Y
+    {
+        get
+        {
+            return (int)Math.Floor(y);
+        }
     }
 
-    public double Speed {
-        get { return speed; }
-        set { speed = value; }
+    public double Speed
+    {
+        get
+        {
+            return speed;
+        }
+        set
+        {
+            speed = value;
+        }
     }
 
-    public List<SnakeSegment> Segments {
-        get { return segments; }
+    public List<SnakeSegment> Segments
+    {
+        get
+        {
+            return segments;
+        }
     }
 
-    public void AddSegment(){
+    public void AddSegment()
+    {
         /*  ------------------------------------------
             2.2
             ------------------------------------------   
@@ -86,9 +112,14 @@ public class Snake{
             3. use the segments.Add method to add the newSegment to the back of
             the segments List.
         */
+
+        SnakeSegment lastSegment = segments[segments.Count - 1];
+        SnakeSegment newSegment = new SnakeSegment(lastSegment.PrevX, lastSegment.PrevY, 'o');
+        segments.Add(newSegment);
     }
 
-    public void UpdateSegments(){
+    public void UpdateSegments()
+    {
         /*  ------------------------------------------
             2.3
             ------------------------------------------   
@@ -105,9 +136,23 @@ public class Snake{
             You can use the segments.Count property to loop through
             the List of snake segments.  
         */
+        for (int i = 0; i < segments.Count; i++)
+        {
+            if (i == 0)
+            {
+                segments[0].X = X;
+                segments[0].Y = Y;
+            }
+            else
+            {
+                segments[i].X = segments[i - 1].PrevX;
+                segments[i].Y = segments[i - 1].PrevY;
+            }
+        }
     }
 
-    public bool IsHeadTouchingBody(){
+    public bool IsHeadTouchingBody()
+    {
         /*  ------------------------------------------
             2.4
             ------------------------------------------   
@@ -117,15 +162,25 @@ public class Snake{
 
             It should return false otherwise.
         */
+        for (int i = 1; i < segments.Count; i++)
+        {
+            if (segments[0].X == segments[i].X && segments[0].Y == segments[i].Y)
+            {
+                return true;
+            }
+        }
         return false;
     }
 
-    public void Update(){
-        if(Input.KeyPressed == InputType.UP){
+    public void Update()
+    {
+        if (Input.KeyPressed == InputType.UP)
+        {
             yDir = -1;
             xDir = 0;
         }
-        else if(Input.KeyPressed == InputType.DOWN){
+        else if (Input.KeyPressed == InputType.DOWN)
+        {
             yDir = 1;
             xDir = 0;
         }
@@ -135,6 +190,7 @@ public class Snake{
             Complete this decision structure to also update the 
             directions when the LEFT and RIGHT keys are pressed.
         */
+
 
         /*  ------------------------------------------
             2.6
