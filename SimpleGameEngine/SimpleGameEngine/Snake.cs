@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using static System.Console;
+using static Time;
 
 public class Snake
 {
@@ -184,13 +185,24 @@ public class Snake
             yDir = 1;
             xDir = 0;
         }
+
         /*  ------------------------------------------
             2.5
             ------------------------------------------   
             Complete this decision structure to also update the 
             directions when the LEFT and RIGHT keys are pressed.
         */
-
+        else if (Input.KeyPressed == InputType.LEFT)
+        {
+            yDir = 0;
+            xDir = -1;
+        }
+        else if (Input.KeyPressed == InputType.RIGHT)
+        {
+            yDir = 0;
+            xDir = 1;
+        }
+        
 
         /*  ------------------------------------------
             2.6
@@ -215,5 +227,10 @@ public class Snake
             REMEMBER: you can use the static Time class to access the 
             DeltaTime property.
         */
+        double  distanceTravelled = x = xDir * speed * DeltaTime;
+        x = x + distanceTravelled;
+
+        distanceTravelled = y = yDir * speed * DeltaTime;
+        y = y + distanceTravelled;
     }
 }
